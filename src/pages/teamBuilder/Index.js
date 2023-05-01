@@ -3,6 +3,7 @@ import axios from 'axios';
 import PokemonCard from "../../components/pokemonCard/Index";
 import { ButtonText, CardsContainer, Clear, Container, GenerateButton, GenerateButtonText, GraphText, Header, HeaderContainer, InputContainer, InputHeader, PokemonInput, RandomPokemon, RandomText, SearchContainer, SubmitPokemon, X } from './style';
 import { typeWeakenesses, typeStrenghts, bfs } from "../../utils/functions";
+import Loading from "../../components/loading/Index";
 
 const TeamBuilder = () => {
 
@@ -13,6 +14,7 @@ const TeamBuilder = () => {
     const [firstCardFill, setFirstCardFill] = useState(false);
     const [lastCardsFill, setLastCardsFill] = useState(false);
     const [graphCicle, setGraphCicle] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     const selectStarter = async (num) => {
         await clearCards();
@@ -122,6 +124,7 @@ const TeamBuilder = () => {
             pokemons.push(`https://pokeapi.co/api/v2/pokemon/${i}/`);
         }
         await axios.all(pokemons.map((pokemon) => axios.get(pokemon))).then((res) => setPokemonList(res));
+        setIsLoading(false);
     };
 
     useEffect(() => {
@@ -130,110 +133,114 @@ const TeamBuilder = () => {
 
     return (
         <Container>
-            <HeaderContainer>
-                <Header>
-                    Your team:
-                </Header>
-                {firstCardFill ? (
-                    <Clear onClick={clearCards}>
-                        <X>
-                            X
-                        </X>
-                    </Clear>
-                )
-                    : <></>}
-            </HeaderContainer>
-            <CardsContainer>
-                <PokemonCard
-                    cardNumber={1}
-                    fill={firstCardFill}
-                    pokemonName={firstCard[0]?.name}
-                    pokemonImage={firstCard[0]?.sprites.front_default}
-                    pokemonType1={firstCard[0]?.types[0]?.type?.name}
-                    pokemonType2={firstCard[0]?.types[1]?.type?.name}
-                />
-                <PokemonCard
-                    cardNumber={2}
-                    fill={lastCardsFill}
-                    pokemonName={firstCard[1]?.name}
-                    pokemonImage={firstCard[1]?.sprites.front_default}
-                    pokemonType1={firstCard[1]?.types[0]?.type?.name}
-                    pokemonType2={firstCard[1]?.types[1]?.type?.name}
-                />
-                <PokemonCard
-                    cardNumber={3}
-                    fill={lastCardsFill}
-                    pokemonName={firstCard[2]?.name}
-                    pokemonImage={firstCard[2]?.sprites.front_default}
-                    pokemonType1={firstCard[2]?.types[0]?.type?.name}
-                    pokemonType2={firstCard[2]?.types[1]?.type?.name}
-                />
-                <PokemonCard
-                    cardNumber={4}
-                    fill={lastCardsFill}
-                    pokemonName={firstCard[3]?.name}
-                    pokemonImage={firstCard[3]?.sprites.front_default}
-                    pokemonType1={firstCard[3]?.types[0]?.type?.name}
-                    pokemonType2={firstCard[3]?.types[1]?.type?.name}
-                />
-                <PokemonCard
-                    cardNumber={5}
-                    fill={lastCardsFill}
-                    pokemonName={firstCard[4]?.name}
-                    pokemonImage={firstCard[4]?.sprites.front_default}
-                    pokemonType1={firstCard[4]?.types[0]?.type?.name}
-                    pokemonType2={firstCard[4]?.types[1]?.type?.name}
-                />
-                <PokemonCard
-                    cardNumber={6}
-                    fill={lastCardsFill}
-                    pokemonName={firstCard[5]?.name}
-                    pokemonImage={firstCard[5]?.sprites.front_default}
-                    pokemonType1={firstCard[5]?.types[0]?.type?.name}
-                    pokemonType2={firstCard[5]?.types[1]?.type?.name}
-                />
-            </CardsContainer>
-            <SearchContainer>
-                <InputHeader>Select Starter Pokemon</InputHeader>
-                <InputContainer>
-                    <PokemonInput
-                        placeholder="Enter pokemon"
-                        onChange={(pokemonName) => { setStarterPokemonName(pokemonName.target.value) }}
-                        value={starterPokemonName}
-                    />
-                    <SubmitPokemon onClick={getSelectedPokemon}>
-                        <ButtonText>
-                            Add Starter
-                        </ButtonText>
-                    </SubmitPokemon>
-                    <RandomPokemon onClick={getRandomPokemon}>
-                        <RandomText>
-                            Random Starter
-                        </RandomText>
-                    </RandomPokemon>
-                </InputContainer>
-                {firstCardFill && !lastCardsFill ? (
-                    <GenerateButton onClick={generateTeam}>
-                        <GenerateButtonText>
-                            Generate Team
-                        </GenerateButtonText>
-                    </GenerateButton>
-                )
-                    : (<>
-                        {lastCardsFill ?
-                            <>
-                                <InputHeader>
-                                    Graph cicle to achieve this team:
-                                </InputHeader>
-                                <GraphText>
-                                    {graphCicle}
-                                </GraphText>
-                            </>
+            {isLoading ? <Loading /> :
+                <>
+                    <HeaderContainer>
+                        <Header>
+                            Your team:
+                        </Header>
+                        {firstCardFill ? (
+                            <Clear onClick={clearCards}>
+                                <X>
+                                    X
+                                </X>
+                            </Clear>
+                        )
                             : <></>}
-                    </>
-                    )
-                }
-            </SearchContainer>
+                    </HeaderContainer>
+                    <CardsContainer>
+                        <PokemonCard
+                            cardNumber={1}
+                            fill={firstCardFill}
+                            pokemonName={firstCard[0]?.name}
+                            pokemonImage={firstCard[0]?.sprites.front_default}
+                            pokemonType1={firstCard[0]?.types[0]?.type?.name}
+                            pokemonType2={firstCard[0]?.types[1]?.type?.name}
+                        />
+                        <PokemonCard
+                            cardNumber={2}
+                            fill={lastCardsFill}
+                            pokemonName={firstCard[1]?.name}
+                            pokemonImage={firstCard[1]?.sprites.front_default}
+                            pokemonType1={firstCard[1]?.types[0]?.type?.name}
+                            pokemonType2={firstCard[1]?.types[1]?.type?.name}
+                        />
+                        <PokemonCard
+                            cardNumber={3}
+                            fill={lastCardsFill}
+                            pokemonName={firstCard[2]?.name}
+                            pokemonImage={firstCard[2]?.sprites.front_default}
+                            pokemonType1={firstCard[2]?.types[0]?.type?.name}
+                            pokemonType2={firstCard[2]?.types[1]?.type?.name}
+                        />
+                        <PokemonCard
+                            cardNumber={4}
+                            fill={lastCardsFill}
+                            pokemonName={firstCard[3]?.name}
+                            pokemonImage={firstCard[3]?.sprites.front_default}
+                            pokemonType1={firstCard[3]?.types[0]?.type?.name}
+                            pokemonType2={firstCard[3]?.types[1]?.type?.name}
+                        />
+                        <PokemonCard
+                            cardNumber={5}
+                            fill={lastCardsFill}
+                            pokemonName={firstCard[4]?.name}
+                            pokemonImage={firstCard[4]?.sprites.front_default}
+                            pokemonType1={firstCard[4]?.types[0]?.type?.name}
+                            pokemonType2={firstCard[4]?.types[1]?.type?.name}
+                        />
+                        <PokemonCard
+                            cardNumber={6}
+                            fill={lastCardsFill}
+                            pokemonName={firstCard[5]?.name}
+                            pokemonImage={firstCard[5]?.sprites.front_default}
+                            pokemonType1={firstCard[5]?.types[0]?.type?.name}
+                            pokemonType2={firstCard[5]?.types[1]?.type?.name}
+                        />
+                    </CardsContainer>
+                    <SearchContainer>
+                        <InputHeader>Select Starter Pokemon</InputHeader>
+                        <InputContainer>
+                            <PokemonInput
+                                placeholder="Enter pokemon"
+                                onChange={(pokemonName) => { setStarterPokemonName(pokemonName.target.value) }}
+                                value={starterPokemonName}
+                            />
+                            <SubmitPokemon onClick={getSelectedPokemon}>
+                                <ButtonText>
+                                    Add Starter
+                                </ButtonText>
+                            </SubmitPokemon>
+                            <RandomPokemon onClick={getRandomPokemon}>
+                                <RandomText>
+                                    Random Starter
+                                </RandomText>
+                            </RandomPokemon>
+                        </InputContainer>
+                        {firstCardFill && !lastCardsFill ? (
+                            <GenerateButton onClick={generateTeam}>
+                                <GenerateButtonText>
+                                    Generate Team
+                                </GenerateButtonText>
+                            </GenerateButton>
+                        )
+                            : (<>
+                                {lastCardsFill ?
+                                    <>
+                                        <InputHeader>
+                                            Graph cicle to achieve this team:
+                                        </InputHeader>
+                                        <GraphText>
+                                            {graphCicle}
+                                        </GraphText>
+                                    </>
+                                    : <></>}
+                            </>
+                            )
+                        }
+                    </SearchContainer>
+                </>
+            }
         </Container >
     )
 
