@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from 'axios';
 import PokemonCard from "../../components/pokemonCard/Index";
 import { ButtonText, CardsContainer, Clear, Container, GenerateButton, GenerateButtonText, GraphText, Header, HeaderContainer, InputContainer, InputHeader, PokemonInput, RandomPokemon, RandomText, SearchContainer, SubmitPokemon, X } from './style';
-import { typechart } from "../../utils/functions";
+import { typechart, bfs } from "../../utils/functions";
 
 const TeamBuilder = () => {
 
@@ -61,6 +61,15 @@ const TeamBuilder = () => {
             graphCicle.push(" - ")
             graphCicle.push(outCounter);
         }
+
+        const graph = typechart.reduce((acc, type) => {
+            acc[type.name] = type.weaknesses;
+            return acc;
+        }, {});
+
+        let path = bfs(graph, graphCicle[0]);
+
+        console.log(path);
         setLastCardsFill(true);
     }
 
@@ -68,10 +77,10 @@ const TeamBuilder = () => {
         //graphCicle.push(type);
         //graphCicle.push('-');
         const types = typechart.find((tpchart) => {
-            return tpchart.type_name === type;
+            return tpchart.name === type;
         })
 
-        return types?.weakness[Math.floor(Math.random() * types?.weakness?.length)];
+        return types?.weaknesses[Math.floor(Math.random() * types?.weaknesses?.length)];
     }
 
     const clearCards = () => {
