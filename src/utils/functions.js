@@ -5,7 +5,7 @@ class type {
   }
 }
 
-export const typechart = [
+export const typeWeakenesses = [
   new type('normal', ['fighting']),
   new type('fire', ['water', 'ground', 'rock']),
   new type('water', ['grass', 'electric']),
@@ -24,6 +24,27 @@ export const typechart = [
   new type('dark', ['fighting', 'bug', 'fairy']),
   new type('steel', ['fire', 'fighting', 'ground']),
   new type('fairy', ['poison', 'steel']),
+];
+
+export const typeStrenghts = [
+  new type('normal',['ghost']),
+  new type('fire',['fire','grass','ice','bug','steel','fairy']),
+  new type('water',['water','fire','ice','steel']),
+  new type('electric',['electric','flying','steel']),
+  new type('grass',['water','electric','grass','ground']),
+  new type('ice',['ice']),
+  new type('fighting',['bug','rock','dark']),
+  new type('poison',['grass','fighting','poison','bug','fairy']),
+  new type('ground',['electric','poison','rock']),
+  new type('flying',['grass','fighting','bug']),
+  new type('psychic',['fighting','psychic']),
+  new type('bug',['grass','fighting','ground']),
+  new type('rock',['normal','fire','poison','flying']),
+  new type('ghost',['dark']),
+  new type('dragon',['fire','water','electric','grass']),
+  new type('dark',['ghost','dark']),
+  new type('steel',['normal','grass','ice','flying','psychic','bug','rock','dragon','steel','fairy']),
+  new type('fairy',['fighting','bug','dark'])
 ];
 
 export const bfs = (graph, start) => {

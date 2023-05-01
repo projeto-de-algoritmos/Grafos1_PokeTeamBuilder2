@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from 'axios';
 import PokemonCard from "../../components/pokemonCard/Index";
 import { ButtonText, CardsContainer, Clear, Container, GenerateButton, GenerateButtonText, GraphText, Header, HeaderContainer, InputContainer, InputHeader, PokemonInput, RandomPokemon, RandomText, SearchContainer, SubmitPokemon, X } from './style';
-import { typechart, bfs } from "../../utils/functions";
+import { typeWeakenesses, typeStrenghts, bfs } from "../../utils/functions";
 
 const TeamBuilder = () => {
 
@@ -43,40 +43,62 @@ const TeamBuilder = () => {
     }
 
     const generateTeam = async () => {
-        for (let i = 1; i < 6; i++) {
-            let counter = await findCounter(firstCard[i - 1]?.types[0]?.type?.name);
-            let outCounter = findCounter(counter);
-            let counters = pokemonList.filter((pokemon) => {
-                if (pokemon.data.types[0].type.name === outCounter) {
-                    return pokemon;
-                } else if (pokemon?.data?.types[1]?.type?.name === outCounter) {
-                    return pokemon;
-                }
-            })
-            //console.log(counters);
-            let teamMember = counters[Math.floor(Math.random() * counters.length)];
-            firstCard.push(teamMember?.data);
-            graphCicle.push(" - ")
-            graphCicle.push(counter);
-            graphCicle.push(" - ")
-            graphCicle.push(outCounter);
+
+        if (graphCicle[0] === 'normal' || graphCicle[0] === 'dragon') {
+            for (let i = 1; i < 6; i++) {
+                let counter = await findCounter(firstCard[i - 1]?.types[0]?.type?.name);
+                let outCounter = findCounter(counter);
+                let counters = pokemonList.filter((pokemon) => {
+                    if (pokemon.data.types[0].type.name === outCounter) {
+                        return pokemon;
+                    } else if (pokemon?.data?.types[1]?.type?.name === outCounter) {
+                        return pokemon;
+                    }
+                })
+                //console.log(counters);
+                let teamMember = counters[Math.floor(Math.random() * counters.length)];
+                firstCard.push(teamMember?.data);
+                graphCicle.push(" - ")
+                graphCicle.push(counter);
+                graphCicle.push(" - ")
+                graphCicle.push(outCounter);
+            }
+        } else {
+            const graph = typeWeakenesses.reduce((acc, type) => {
+                acc[type.name] = type.weaknesses;
+                return acc;
+            }, {});
+
+            let paths = bfs(graph, graphCicle[0]);
+            let path = Math.floor(Math.random() * paths.length);
+
+            for (let i = 1; i < 13; i += 2) {
+                let counter = paths[path][i];
+                let outCounter = paths[path][i + 1]
+                let counters = pokemonList.filter((pokemon) => {
+                    if (pokemon.data.types[0].type.name === outCounter) {
+                        return pokemon;
+                    } else if (pokemon?.data?.types[1]?.type?.name === outCounter) {
+                        return pokemon;
+                    }
+                })
+                //console.log(counters);
+                let teamMember = counters[Math.floor(Math.random() * counters.length)];
+                firstCard.push(teamMember?.data);
+                graphCicle.push(" - ")
+                graphCicle.push(counter);
+                graphCicle.push(" - ")
+                graphCicle.push(outCounter);
+            }
+            console.log(path);
         }
-
-        const graph = typechart.reduce((acc, type) => {
-            acc[type.name] = type.weaknesses;
-            return acc;
-        }, {});
-
-        let path = bfs(graph, graphCicle[0]);
-
-        console.log(path);
         setLastCardsFill(true);
     }
 
     const findCounter = (type) => {
         //graphCicle.push(type);
         //graphCicle.push('-');
-        const types = typechart.find((tpchart) => {
+        const types = typeWeakenesses.find((tpchart) => {
             return tpchart.name === type;
         })
 
