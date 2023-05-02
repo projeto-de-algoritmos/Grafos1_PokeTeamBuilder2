@@ -20,6 +20,7 @@ const pokeballAnimation = keyframes`
 `;
 
 export const Container = styled.div`
+    top: 40%;
     justify-self: center;
     align-self: center;
     position: absolute;
