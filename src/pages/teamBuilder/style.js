@@ -158,13 +158,16 @@ export const GenerateButtonText = styled.p`
     text-align: center;
 `
 export const Clear = styled.div`
+    display: flex;
     height: 40px;
     width: 40px;
     border-radius: 40px;
     background-color: #000;
     align-self: center;
     text-align: center;
+    justify-content: center;
     cursor: pointer;
+    
 
     &:hover {
         background-color: #999;
