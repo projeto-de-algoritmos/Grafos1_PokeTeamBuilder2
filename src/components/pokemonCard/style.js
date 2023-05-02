@@ -1,13 +1,17 @@
 import styled from "styled-components";
 
 export const EmptyCard = styled.div`
-    width: 15%;
-    height: 100%;
+    display: flex;
+    width: 13.5vw;
+    height: 20vw;
+    min-width: 190px;
+    min-height: 307px;
     background-color: #000;
     border-radius: 10px;
     align-items: center;
     justify-content: center;
-    margin-left: 1.5%;
+    margin-left: 10px;
+    margin-bottom: 10px;
     text-align: center;
 `;
 
@@ -19,12 +23,16 @@ export const CardNumber = styled.p`
 `
 
 export const FilledCard = styled.div`
-    width: 15%;
-    height: 100%;
+    display: flex;
+    width: 13.5vw;
+    height: 20vw;
+    min-width: 190px;
+    min-height: 307px;
     border-radius: 10px;
     align-items: center;
     justify-content: center;
-    margin-left: 1.5%;
+    margin-left: 10px;
+    margin-bottom: 10px;
     text-align: center;
     flex-flow: column;
     box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);

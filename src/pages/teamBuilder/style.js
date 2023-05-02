@@ -5,21 +5,24 @@ export const Container = styled.div`
 
     display: flex;
     width: 100vw;
-    height: 100vh;
-    justify-content: center;
     align-items: center;
     flex-wrap: wrap;
     flex-flow: column;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
     background-image: url(${img});
     background-size: 100% 100%;
+    min-height: 100vh;
 `;
 
-export const CardsContainer = styled.div`
+export const CardsContainer = styled.div` 
 
     display: flex;
     width: 90%;
-    height: 40%;
+    flex-wrap: wrap;
+    min-height: 40%;
+    justify-content: center;
+    height: fit-content;
 `
 export const Header = styled.h1`
 
@@ -33,7 +36,7 @@ export const HeaderContainer = styled.div`
     justify-content: space-between;
     width: 87%;
     height: 10%;
-    margin-top: 4%;
+    margin-top: 10vh;
     margin-left: 5%;
     margin-right: 5%;
     flex-flow: wrap;
@@ -42,17 +45,16 @@ export const HeaderContainer = styled.div`
 export const SearchContainer = styled.div`
 
     display: flex;
-    width: 50%;
+    width: 55%;
     height: 35%;
-    margin-top: 2%;
     justify-content: flex-start;
     align-items: center;
     flex-flow: column;
 `
 
 export const PokemonInput = styled.input`
-    width: 74%;
-    height: 100%;
+    width: 70%;
+    height: 50px;
     display: flex;
     border: 2px solid #000000;
     border-radius: 10px;
@@ -69,9 +71,10 @@ export const InputHeader = styled.h1`
 `
 
 export const SubmitPokemon = styled.div`
-
-    height: 100%;
-    width: 20%;
+    
+    display: flex;
+    height: 50px;
+    width: 150px;
     margin-left: 1%;
     border-radius: 10px;
     background-color: #000;
@@ -93,8 +96,7 @@ export const InputContainer = styled.div`
     flex-flow: row;
 `
 export const ButtonText = styled.p`
-    width: 100%;
-    height: 100%;
+
     font-size: 20px;
     font-weight: bolder;
     color: #FFF;
@@ -103,8 +105,9 @@ export const ButtonText = styled.p`
 
 export const RandomPokemon = styled.div`
 
-    height: 100%;
-    width: 20%;
+    display: flex;
+    height: 50px;
+    width: 200px;
     margin-left: 1%;
     border-radius: 10px;
     border: 3px solid #000;
@@ -122,8 +125,7 @@ export const RandomPokemon = styled.div`
 `
 
 export const RandomText = styled.p`
-    width: 100%;
-    height: 100%;
+
     font-size: 20px;
     font-weight: bolder;
     color: #000;
@@ -132,8 +134,9 @@ export const RandomText = styled.p`
 `
 export const GenerateButton = styled.div`
     
-    height: 25%;
-    width: 25%;
+    display: flex;
+    height: 75px;
+    width: 250px;
     margin-top: 5%;
     border-radius: 10px;
     background-color: #000;
@@ -149,21 +152,22 @@ export const GenerateButton = styled.div`
 `
 
 export const GenerateButtonText = styled.p`
-    width: 100%;
-    height: 100%;
     font-size: 25px;
     font-weight: bolder;
     color: #FFF;
     text-align: center;
 `
 export const Clear = styled.div`
+    display: flex;
     height: 40px;
     width: 40px;
     border-radius: 40px;
     background-color: #000;
     align-self: center;
     text-align: center;
+    justify-content: center;
     cursor: pointer;
+    
 
     &:hover {
         background-color: #999;
@@ -179,7 +183,7 @@ export const X = styled.p`
 `
 
 export const GraphText = styled.p`
-    font-size: 21px;
+    font-size: 18px;
     font-weight: bolder;
     color: #000;
 `

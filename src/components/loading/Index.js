@@ -6,7 +6,7 @@ const Loading = () => {
             <Pokeball src={require("../../background/pokeball.png")} />
             <TextContainer>
                 <LoadingText>
-                    Carregando
+                    Loading
                 </LoadingText>
                 <Dot />
                 <Dot />
